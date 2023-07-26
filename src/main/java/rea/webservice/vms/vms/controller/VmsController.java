@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rea.webservice.vms.vms.helpers.ResponseHandler;
 import rea.webservice.vms.vms.models.entities.Insert;
-import rea.webservice.vms.vms.models.entities.ResponseInsert;
 import rea.webservice.vms.vms.models.entities.Vms;
-import rea.webservice.vms.vms.services.InsertService;
 import rea.webservice.vms.vms.services.VmsService;
 
 @Component
@@ -27,7 +25,6 @@ import rea.webservice.vms.vms.services.VmsService;
 public class VmsController {
     @Autowired
     private VmsService vmsService;
-    private InsertService insertService;
 
     @GetMapping("vms")
     public ResponseEntity<Object> getAllDataTOP(@RequestParam(value = "FETCH", defaultValue = "100") Integer fetch, @RequestParam(value = "OFFSET", defaultValue = "0") Integer offset){
@@ -99,34 +96,46 @@ public class VmsController {
     @PostMapping("vms")
     public ResponseEntity<Object> save(@RequestBody Insert insert){
         try{
-            String categorycode = insert.getCategorycode();
-            String categoryid = vmsService.cekCategory(categorycode);
-            System.out.println(categoryid);
-            if (categoryid == null) {
-                return ResponseHandler.generateResponse("CategoryCode Tidak ditemukan", HttpStatus.OK, categoryid, 0);
+            String vhcode = insert.getVhcode();
+            String vhbrand = insert.getVhbrand();
+            String vhmodel = insert.getVhmodel();
+            String dateofcommission = insert.getDateofcommission();
+            String regno = insert.getRegno();
+            String stnk = insert.getStnk();
+            String user = insert.getCreatedby();
+            String t8 = insert.getT8();
+            String manufactureyear = insert.getManufactureyear();
+            String stnkexpired = insert.getStnkexpired();
+            String chasisno = insert.getChasisno();
+            String engineno = insert.getEngineno();
+            if (vhcode.isEmpty()  || vhbrand.isEmpty() || vhmodel.isEmpty() || dateofcommission.isEmpty() || regno.isEmpty() || stnk.isEmpty() || user.isEmpty() || t8.isEmpty() || manufactureyear.isEmpty() || stnkexpired.isEmpty() || chasisno.isEmpty() || engineno.isEmpty()) {
+                return ResponseHandler.generateResponse("Parameter Harus di isi semua", HttpStatus.OK, null, 0);
             } else {
-                String businessunitcode = insert.getBusinessunitcode();
-                String estateid = vmsService.cekEstate(businessunitcode);
-                System.out.println(estateid);
-                if (estateid == null){
-                    return ResponseHandler.generateResponse("BusinessUnitCode Tidak ditemukan", HttpStatus.OK, estateid, 0);
+                List<Vms> resultData = vmsService.cekData(chasisno, engineno); 
+                System.out.println(resultData);;
+                int jumlah = vmsService.cekDataJumlah(chasisno, engineno);
+                System.out.println(jumlah);
+                if (jumlah != 0) {
+                    return ResponseHandler.generateResponse("Kendaraan Telah di Daftarkan Sebelumnya", HttpStatus.OK, resultData, jumlah);
                 } else {
-                    String vhcode = insert.getVhcode();
-                    String vhbrand = insert.getVhbrand();
-                    String vhmodel = insert.getVhmodel();
-                    String dateofcommission = insert.getDateofcommission();
-                    String chasisno = insert.getChasisno();
-                    String engineno = insert.getEngineno();
-                    String regno = insert.getRegno();
-                    String stnk = insert.getStnk();
-                    String user = insert.getCreatedby();
-                    String t8 = insert.getT8();
-                    String manufactureyear = insert.getManufactureyear();
-                    String stnkexpired = insert.getStnkexpired();
-                    List<Vms> result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, stnkexpired);
-                    return ResponseHandler.generateResponse("Data Berhasil di tambahkan", HttpStatus.OK, result, 1);
+                    String categorycode = insert.getCategorycode();
+                    String categoryid = vmsService.cekCategory(categorycode);
+                    System.out.println(categoryid);
+                    if (categoryid == null) {
+                        return ResponseHandler.generateResponse("CategoryCode Tidak ditemukan", HttpStatus.OK, categoryid, 0);
+                    } else {
+                        String businessunitcode = insert.getBusinessunitcode();
+                        String estateid = vmsService.cekEstate(businessunitcode);
+                        System.out.println(estateid);
+                        if (estateid == null){
+                            return ResponseHandler.generateResponse("BusinessUnitCode Tidak ditemukan", HttpStatus.OK, estateid, 0);
+                        } else {
+                            List<Vms> result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, stnkexpired);
+                            return ResponseHandler.generateResponse("Data Berhasil di tambahkan", HttpStatus.OK, result, 1);
+                        } 
                     }
-            } 
+                } 
+            }
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null, 0);
         }
@@ -143,6 +152,7 @@ public class VmsController {
         } else {
             List<Vms> result = vmsService.Search(categoryid, estateid, vhcode, vhbrand, chasisno, engineno, stnk, manufactureyear, capacity, stnkexpired);
             int jumlah = vmsService.JumlahSearch(categoryid, estateid, vhcode, vhbrand, chasisno, engineno, stnk, manufactureyear, capacity, stnkexpired);
+            System.out.println(jumlah);
             return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah); 
         }
     } catch (Exception e) {

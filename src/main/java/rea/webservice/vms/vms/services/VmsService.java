@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import rea.webservice.vms.vms.models.entities.Insert;
-import rea.webservice.vms.vms.models.entities.ResponseInsert;
 import rea.webservice.vms.vms.models.entities.Vms;
 import rea.webservice.vms.vms.models.repos.VmsRepo;
 
@@ -17,14 +15,10 @@ import rea.webservice.vms.vms.models.repos.VmsRepo;
 public class VmsService {
     @Autowired
     private VmsRepo vmsRepo;
-    /*
+
     public Vms save(Vms vms){
         return vmsRepo.save(vms);
-    }  */
-
-    
-
-
+    }
     public Iterable<Vms> findAll(){
         return vmsRepo.findAll();
     }
@@ -43,8 +37,12 @@ public class VmsService {
         return vmsRepo.getAllDataTOP(fetch, offset);
     }
 
-    public List<Vms> cekData(String vhcode, String chasisno, String engineno){
-        return vmsRepo.cekData(vhcode, chasisno, engineno);
+    public List<Vms> cekData(String chasisno, String engineno){
+        return vmsRepo.cekData(chasisno, engineno);
+    }
+
+    public int cekDataJumlah(String chasisno, String engineno){
+        return vmsRepo.cekDataJumlah(chasisno, engineno);
     }
 
     public String cekCategory(String categorycode){
