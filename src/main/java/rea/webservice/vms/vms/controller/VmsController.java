@@ -99,6 +99,7 @@ public class VmsController {
             String vhcode = insert.getVhcode();
             String vhbrand = insert.getVhbrand();
             String vhmodel = insert.getVhmodel();
+            String vhcolor = insert.getVhcolor();
             String dateofcommission = insert.getDateofcommission();
             String regno = insert.getRegno();
             String stnk = insert.getStnk();
@@ -108,8 +109,37 @@ public class VmsController {
             String stnkexpired = insert.getStnkexpired();
             String chasisno = insert.getChasisno();
             String engineno = insert.getEngineno();
-            if (vhcode.isEmpty()  || vhbrand.isEmpty() || vhmodel.isEmpty() || dateofcommission.isEmpty() || regno.isEmpty() || stnk.isEmpty() || user.isEmpty() || t8.isEmpty() || manufactureyear.isEmpty() || stnkexpired.isEmpty() || chasisno.isEmpty() || engineno.isEmpty()) {
-                return ResponseHandler.generateResponse("Parameter Harus di isi semua", HttpStatus.OK, null, 0);
+            Integer capacity = insert.getCapacity();
+            Integer tare = insert.getTare();
+            Integer tanker = insert.getTanker();
+            if (vhcode.isEmpty()) {
+                return ResponseHandler.generateResponse("VHcode harus di isi", HttpStatus.OK, null, 0);
+            } else if (vhbrand.isEmpty()) {
+                return ResponseHandler.generateResponse("VHbrand harus di isi", HttpStatus.OK, null, 0);
+            } else if (vhmodel.isEmpty()) {
+                return ResponseHandler.generateResponse("VHmodel harus di isi", HttpStatus.OK, null, 0);
+            } else if (vhcolor.isEmpty()) {
+                return ResponseHandler.generateResponse("VHcolor harus di isi", HttpStatus.OK, null, 0);
+            } else if (dateofcommission.isEmpty()) {
+                return ResponseHandler.generateResponse("DateOfCommission harus di isi", HttpStatus.OK, null, 0);
+            } else if (regno.isEmpty()) {
+                return ResponseHandler.generateResponse("RegNo harus di isi", HttpStatus.OK, null, 0);
+            } else if (stnk.isEmpty()) {
+                return ResponseHandler.generateResponse("STNK harus di isi", HttpStatus.OK, null, 0);
+            } else if (user.isEmpty()) {
+                return ResponseHandler.generateResponse("User harus di isi", HttpStatus.OK, null, 0);
+            } else if (t8.isEmpty()) {
+                return ResponseHandler.generateResponse("T8 harus di isi", HttpStatus.OK, null, 0);
+            } else if (manufactureyear.isEmpty()) {
+                return ResponseHandler.generateResponse("ManufactureYear harus di isi", HttpStatus.OK, null, 0);
+            } else if (stnkexpired.isEmpty()){
+                return ResponseHandler.generateResponse("STNKExpired harus di isi", HttpStatus.OK, null, 0);
+            } else if (chasisno.isEmpty()) {
+                return ResponseHandler.generateResponse("ChasisNo harus di isi", HttpStatus.OK, null, 0);
+            } else if (engineno.isEmpty()) {
+                return ResponseHandler.generateResponse("EngineNo harus di isi", HttpStatus.OK, null, 0);
+            } else if (capacity == 0 ) {
+                return ResponseHandler.generateResponse("Capacity tidak boleh di isi 0", HttpStatus.OK, null, 0);
             } else {
                 List<Vms> resultData = vmsService.cekData(chasisno, engineno); 
                 System.out.println(resultData);;
@@ -130,7 +160,7 @@ public class VmsController {
                         if (estateid == null){
                             return ResponseHandler.generateResponse("BusinessUnitCode Tidak ditemukan", HttpStatus.OK, estateid, 0);
                         } else {
-                            List<Vms> result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, stnkexpired);
+                            List<Vms> result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, vhcolor, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, capacity, tare, stnkexpired, tanker);
                             return ResponseHandler.generateResponse("Data Berhasil di tambahkan", HttpStatus.OK, result, 1);
                         } 
                     }

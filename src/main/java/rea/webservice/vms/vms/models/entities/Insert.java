@@ -36,6 +36,7 @@ public class Insert {
     private String vhcode;
     private String vhbrand;
     private String vhmodel;
+    private String vhcolor;
     private String dateofcommission;
     private String chasisno;
     private String engineno;
@@ -45,6 +46,9 @@ public class Insert {
     private String t8;
     private String manufactureyear;
     private String stnkexpired;
+    private Integer capacity;
+    private Integer tare;
+    private Integer tanker;
     public String getCategorycode() {
         return categorycode;
     }
@@ -86,6 +90,12 @@ public class Insert {
     }
     public void setVhmodel(String vhmodel) {
         this.vhmodel = vhmodel;
+    }
+    public String getVhcolor() {
+        return vhcolor;
+    }
+    public void setVhcolor(String vhcolor) {
+        this.vhcolor = vhcolor;
     }
     public String getDateofcommission() {
         return dateofcommission;
@@ -141,14 +151,32 @@ public class Insert {
     public void setStnkexpired(String stnkexpired) {
         this.stnkexpired = stnkexpired;
     }
+    public Integer getCapacity() {
+        return capacity;
+    }
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+    public Integer getTare() {
+        return tare;
+    }
+    public void setTare(Integer tare) {
+        this.tare = tare;
+    }
+    public Integer getTanker() {
+        return tanker;
+    }
+    public void setTanker(Integer tanker) {
+        this.tanker = tanker;
+    }
     @Override
     public String toString() {
         return "Insert [categorycode=" + categorycode + ", categoryname=" + categoryname + ", businessunitcode="
                 + businessunitcode + ", businessunitname=" + businessunitname + ", vhcode=" + vhcode + ", vhbrand="
-                + vhbrand + ", vhmodel=" + vhmodel + ", dateofcommission=" + dateofcommission + ", chasisno=" + chasisno
-                + ", engineno=" + engineno + ", regno=" + regno + ", stnk=" + stnk + ", createdby=" + createdby
-                + ", t8=" + t8 + ", manufactureyear=" + manufactureyear + ", stnkexpired=" + stnkexpired + "]";
+                + vhbrand + ", vhmodel=" + vhmodel + ", vhcolor=" + vhcolor + ", dateofcommission=" + dateofcommission
+                + ", chasisno=" + chasisno + ", engineno=" + engineno + ", regno=" + regno + ", stnk=" + stnk
+                + ", createdby=" + createdby + ", t8=" + t8 + ", manufactureyear=" + manufactureyear + ", stnkexpired="
+                + stnkexpired + ", capacity=" + capacity + ", tare=" + tare + ", tanker=" + tanker + "]";
     }
-        
     
 }

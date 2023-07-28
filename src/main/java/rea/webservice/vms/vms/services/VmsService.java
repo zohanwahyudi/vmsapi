@@ -53,7 +53,7 @@ public class VmsService {
         return vmsRepo.cekEstate(businessunitcode);
     }
 
-    public List<Vms> insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, String stnkexpired){
-        return vmsRepo.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, stnkexpired);
+    public List<Vms> insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String vhcolor, String dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, Integer capacity, Integer tare, String stnkexpired, Integer tanker){
+        return vmsRepo.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, vhcolor, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, capacity, tare, stnkexpired, tanker );
     }
 }

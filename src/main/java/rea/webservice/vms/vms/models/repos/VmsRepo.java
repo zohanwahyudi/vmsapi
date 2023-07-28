@@ -46,14 +46,13 @@ public interface VmsRepo extends CrudRepository <Vms, Long> {
     @Query(value = "SELECT COUNT(*) as jumlah from vehicle.[vehiclemaster] WHERE ChasisNo = :chasisno OR EngineNo = :engineno ", nativeQuery = true)
     int cekDataJumlah(String chasisno, String engineno);
     
-
     @Query(value = "SELECT categoryid from vehicle.[category] WHERE Category = :categorycode ", nativeQuery = true)
     String cekCategory(String categorycode);
 
     @Query(value = "SELECT EstateID as estateid from general.[estate] WHERE Abbreviation = :businessunitcode ", nativeQuery = true)
     String cekEstate(String businessunitcode);
 
-    @Query(value = "INSERT INTO Vehicle.[VehicleMaster] (CategoryID, EstateID, ContractorID, VHCode, VHBrand, VHModel, VHColor, Active, DateOfCommission, ChasisNo, EngineNo, RegNo, STNK, Remarks, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn, t8, InActiveDate, ManufactureYear, Capacity, Tare, STNKExpired, Tanker) OUTPUT INSERTED.* VALUES (:categoryid, :estateid, NULL, :vhcode, :vhbrand, :vhmodel, '', 1, :dateofcommission, :chasisno, :engineno, :regno, :stnk, '', :user, GETDATE(), '', '', :t8, NULL, :manufactureyear, 0, 0, :stnkexpired, 0) ", nativeQuery = true)
-    List<Vms> insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, String stnkexpired );
+    @Query(value = "INSERT INTO Vehicle.[VehicleMaster] (CategoryID, EstateID, ContractorID, VHCode, VHBrand, VHModel, VHColor, Active, DateOfCommission, ChasisNo, EngineNo, RegNo, STNK, Remarks, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn, t8, InActiveDate, ManufactureYear, Capacity, Tare, STNKExpired, Tanker) OUTPUT INSERTED.* VALUES (:categoryid, :estateid, NULL, :vhcode, :vhbrand, :vhmodel, :vhcolor, 1, :dateofcommission, :chasisno, :engineno, :regno, :stnk, '', :user, GETDATE(), '', '', :t8, NULL, :manufactureyear, :capacity, :tare, :stnkexpired, :tanker) ", nativeQuery = true)
+    List<Vms> insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String vhcolor, String dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, Integer capacity, Integer tare, String stnkexpired, Integer tanker );
     
 }
