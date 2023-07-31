@@ -40,11 +40,11 @@ public interface VmsRepo extends CrudRepository <Vms, Long> {
     @Query(value = "SELECT * from vehicle.[vehiclemaster] ORDER BY ID DESC OFFSET :offset ROWS FETCH NEXT :fetch ROWS ONLY ", nativeQuery = true)
     Iterable<Vms> getAllDataTOP(Integer fetch, Integer offset);
 
-    @Query(value = "SELECT * from vehicle.[vehiclemaster] WHERE ChasisNo = :chasisno OR EngineNo = :engineno ", nativeQuery = true)
-    List<Vms> cekData(String chasisno, String engineno);
+    @Query(value = "SELECT * from vehicle.[vehiclemaster] WHERE ChasisNo = :chasisno OR EngineNo = :engineno OR VHCode = :vhcode OR RegNo = :regno ", nativeQuery = true)
+    List<Vms> cekData(String chasisno, String engineno, String vhcode, String regno);
 
-    @Query(value = "SELECT COUNT(*) as jumlah from vehicle.[vehiclemaster] WHERE ChasisNo = :chasisno OR EngineNo = :engineno ", nativeQuery = true)
-    int cekDataJumlah(String chasisno, String engineno);
+    @Query(value = "SELECT COUNT(*) as jumlah from vehicle.[vehiclemaster] WHERE ChasisNo = :chasisno OR EngineNo = :engineno OR VHCode = :vhcode OR RegNo = :regno ", nativeQuery = true)
+    int cekDataJumlah(String chasisno, String engineno, String vhcode, String regno);
     
     @Query(value = "SELECT categoryid from vehicle.[category] WHERE Category = :categorycode ", nativeQuery = true)
     String cekCategory(String categorycode);

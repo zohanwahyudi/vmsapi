@@ -37,12 +37,12 @@ public class VmsService {
         return vmsRepo.getAllDataTOP(fetch, offset);
     }
 
-    public List<Vms> cekData(String chasisno, String engineno){
-        return vmsRepo.cekData(chasisno, engineno);
+    public List<Vms> cekData(String chasisno, String engineno, String vhcode, String regno){
+        return vmsRepo.cekData(chasisno, engineno, vhcode, regno);
     }
 
-    public int cekDataJumlah(String chasisno, String engineno){
-        return vmsRepo.cekDataJumlah(chasisno, engineno);
+    public int cekDataJumlah(String chasisno, String engineno, String vhcode, String regno){
+        return vmsRepo.cekDataJumlah(chasisno, engineno, vhcode, regno);
     }
 
     public String cekCategory(String categorycode){
