@@ -1,6 +1,7 @@
 package rea.webservice.vms.vms.services;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,6 @@ public class VmsService {
     @Autowired
     private VmsRepo vmsRepo;
 
-    public Vms save(Vms vms){
-        return vmsRepo.save(vms);
-    }
     public Iterable<Vms> findAll(){
         return vmsRepo.findAll();
     }
@@ -37,12 +35,16 @@ public class VmsService {
         return vmsRepo.getAllDataTOP(fetch, offset);
     }
 
-    public List<Vms> cekData(String chasisno, String engineno, String vhcode, String regno){
-        return vmsRepo.cekData(chasisno, engineno, vhcode, regno);
+    public int jumlahAllData(){
+        return vmsRepo.jumlahAllData();
     }
 
-    public int cekDataJumlah(String chasisno, String engineno, String vhcode, String regno){
-        return vmsRepo.cekDataJumlah(chasisno, engineno, vhcode, regno);
+    public List<Vms> cekData(String vhcode){
+        return vmsRepo.cekData(vhcode);
+    }
+
+    public int cekDataJumlah(String vhcode){
+        return vmsRepo.cekDataJumlah(vhcode);
     }
 
     public String cekCategory(String categorycode){
@@ -53,7 +55,11 @@ public class VmsService {
         return vmsRepo.cekEstate(businessunitcode);
     }
 
-    public List<Vms> insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String vhcolor, String dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, Integer capacity, Integer tare, String stnkexpired, Integer tanker){
+    public String cekContractor(String contractorcode){
+        return vmsRepo.cekContractor(contractorcode);
+    }
+
+    public String insertData(String categoryid, String estateid, String vhcode, String vhbrand, String vhmodel, String vhcolor, Date dateofcommission, String chasisno, String engineno, String regno, String stnk, String user, String t8, String manufactureyear, Integer capacity, Integer tare, Date stnkexpired, Integer tanker){
         return vmsRepo.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, vhcolor, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, capacity, tare, stnkexpired, tanker );
     }
 }

@@ -13,9 +13,15 @@ public class Vms {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     // private String vehicleid; // tidak ada
-    private String categoryid; // categoryCode
-    private String estateid; // tidak ada
-    private String contractorid; // tidak ada
+    // private String categoryid; // categoryCode
+    // private String estateid; // tidak ada
+    // private String contractorid; // tidak ada
+    private String categoryname;
+    private String categorycode;
+    private String estatename;
+    private String estatecode;
+    private String contractorcode;
+    private String contractorname;
     private String vhcode; // vehicleCode
     private String vhbrand; // brand
     private String vhmodel; // model
@@ -34,33 +40,51 @@ public class Vms {
     private String t8; // sesuai
     private String inactivedate; // tidak ada
     private String manufactureyear; // sesuai
-    private String capacity; // tidak ada
-    private String tare; // tidak ada
+    private Integer capacity; // tidak ada
+    private Integer tare; // tidak ada
     private String stnkexpired; //stnkExpiredDate
-    private String tanker; // tidak ada
+    private Integer tanker; // tidak ada
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public String getCategoryid() {
-        return categoryid;
+    public String getCategoryname() {
+        return categoryname;
     }
-    public void setCategoryid(String categoryid) {
-        this.categoryid = categoryid;
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
-    public String getEstateid() {
-        return estateid;
+    public String getCategorycode() {
+        return categorycode;
     }
-    public void setEstateid(String estateid) {
-        this.estateid = estateid;
+    public void setCategorycode(String categorycode) {
+        this.categorycode = categorycode;
     }
-    public String getContractorid() {
-        return contractorid;
+    public String getEstatename() {
+        return estatename;
     }
-    public void setContractorid(String contractorid) {
-        this.contractorid = contractorid;
+    public void setEstatename(String estatename) {
+        this.estatename = estatename;
+    }
+    public String getEstatecode() {
+        return estatecode;
+    }
+    public void setEstatecode(String estatecode) {
+        this.estatecode = estatecode;
+    }
+    public String getContractorcode() {
+        return contractorcode;
+    }
+    public void setContractorcode(String contractorcode) {
+        this.contractorcode = contractorcode;
+    }
+    public String getContractorname() {
+        return contractorname;
+    }
+    public void setContractorname(String contractorname) {
+        this.contractorname = contractorname;
     }
     public String getVhcode() {
         return vhcode;
@@ -170,16 +194,16 @@ public class Vms {
     public void setManufactureyear(String manufactureyear) {
         this.manufactureyear = manufactureyear;
     }
-    public String getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
-    public void setCapacity(String capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
-    public String getTare() {
+    public Integer getTare() {
         return tare;
     }
-    public void setTare(String tare) {
+    public void setTare(Integer tare) {
         this.tare = tare;
     }
     public String getStnkexpired() {
@@ -188,16 +212,17 @@ public class Vms {
     public void setStnkexpired(String stnkexpired) {
         this.stnkexpired = stnkexpired;
     }
-    public String getTanker() {
+    public Integer getTanker() {
         return tanker;
     }
-    public void setTanker(String tanker) {
+    public void setTanker(Integer tanker) {
         this.tanker = tanker;
     }
     @Override
     public String toString() {
-        return "Vms [id=" + id + ", categoryid=" + categoryid + ", estateid=" + estateid + ", contractorid="
-                + contractorid + ", vhcode=" + vhcode + ", vhbrand=" + vhbrand + ", vhmodel=" + vhmodel + ", vhcolor="
+        return "Vms [id=" + id + ", categoryname=" + categoryname + ", categorycode=" + categorycode + ", estatename="
+                + estatename + ", estatecode=" + estatecode + ", contractorcode=" + contractorcode + ", contractorname="
+                + contractorname + ", vhcode=" + vhcode + ", vhbrand=" + vhbrand + ", vhmodel=" + vhmodel + ", vhcolor="
                 + vhcolor + ", active=" + active + ", dateofcommission=" + dateofcommission + ", chasisno=" + chasisno
                 + ", engineno=" + engineno + ", regno=" + regno + ", stnk=" + stnk + ", remarks=" + remarks
                 + ", createdby=" + createdby + ", createdon=" + createdon + ", modifiedby=" + modifiedby
@@ -206,6 +231,5 @@ public class Vms {
                 + ", tanker=" + tanker + "]";
     }
     
-   
     
 }

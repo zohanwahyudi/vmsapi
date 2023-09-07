@@ -1,5 +1,7 @@
 package rea.webservice.vms.vms.models.entities;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,7 +39,7 @@ public class Insert {
     private String vhbrand;
     private String vhmodel;
     private String vhcolor;
-    private String dateofcommission;
+    private Date dateofcommission;
     private String chasisno;
     private String engineno;
     private String regno;
@@ -45,7 +47,7 @@ public class Insert {
     private String createdby;
     private String t8;
     private String manufactureyear;
-    private String stnkexpired;
+    private Date stnkexpired;
     private Integer capacity;
     private Integer tare;
     private Integer tanker;
@@ -97,10 +99,10 @@ public class Insert {
     public void setVhcolor(String vhcolor) {
         this.vhcolor = vhcolor;
     }
-    public String getDateofcommission() {
+    public Date getDateofcommission() {
         return dateofcommission;
     }
-    public void setDateofcommission(String dateofcommission) {
+    public void setDateofcommission(Date dateofcommission) {
         this.dateofcommission = dateofcommission;
     }
     public String getChasisno() {
@@ -145,10 +147,10 @@ public class Insert {
     public void setManufactureyear(String manufactureyear) {
         this.manufactureyear = manufactureyear;
     }
-    public String getStnkexpired() {
+    public Date getStnkexpired() {
         return stnkexpired;
     }
-    public void setStnkexpired(String stnkexpired) {
+    public void setStnkexpired(Date stnkexpired) {
         this.stnkexpired = stnkexpired;
     }
     public Integer getCapacity() {
@@ -178,5 +180,7 @@ public class Insert {
                 + ", createdby=" + createdby + ", t8=" + t8 + ", manufactureyear=" + manufactureyear + ", stnkexpired="
                 + stnkexpired + ", capacity=" + capacity + ", tare=" + tare + ", tanker=" + tanker + "]";
     }
+    
+    
     
 }

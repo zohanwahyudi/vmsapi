@@ -1,5 +1,6 @@
 package rea.webservice.vms.vms.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,23 @@ public class VmsController {
     private VmsService vmsService;
 
     @GetMapping("vms")
-    public ResponseEntity<Object> getAllDataTOP(@RequestParam(value = "FETCH", defaultValue = "100") Integer fetch, @RequestParam(value = "OFFSET", defaultValue = "0") Integer offset){
+    public ResponseEntity<Object> getAllDataTOP(@RequestParam(value = "FETCH", defaultValue = "100") Integer fetch, @RequestParam(value = "PAGE", defaultValue = "1") Integer page){
         try {
+            Integer offset = 0;
+            if(page == 0 || page == 1){
+                offset = 0;
+            } else {
+                offset = ((page - 1) * fetch);
+            }
         Iterable<Vms> result = vmsService.getAllDataTOP(fetch, offset);
-        return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, fetch, "00");
+        int jumlah = vmsService.jumlahAllData();
+        if( jumlah <= fetch ) {
+          return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah, "SUCCESS");  
+        } else {
+           return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, fetch, "SUCCESS");   
+        }
         } catch (Exception e) {
-            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null, 0, "99");
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null, 0, "ERROR");
         }
     
     /* 
@@ -90,103 +102,108 @@ public class VmsController {
             
         }
     }
+*/
+    
 
-    */
     @Async
     @PostMapping("vms")
-    public ResponseEntity<Object> save(@RequestBody Insert insert){
+    public ResponseEntity<Object> insertData(@RequestBody Insert insert){
         try{
+            String categorycode = insert.getCategorycode();
+            String categoryname = insert.getCategoryname();
+            String businessunitcode = insert.getBusinessunitcode();
+            String businessunitname = insert.getBusinessunitname();
             String vhcode = insert.getVhcode();
             String vhbrand = insert.getVhbrand();
             String vhmodel = insert.getVhmodel();
             String vhcolor = insert.getVhcolor();
-            String dateofcommission = insert.getDateofcommission();
+            Date dateofcommission = insert.getDateofcommission();
             String regno = insert.getRegno();
             String stnk = insert.getStnk();
             String user = insert.getCreatedby();
             String t8 = insert.getT8();
             String manufactureyear = insert.getManufactureyear();
-            String stnkexpired = insert.getStnkexpired();
+            Date stnkexpired = insert.getStnkexpired();
             String chasisno = insert.getChasisno();
             String engineno = insert.getEngineno();
             Integer capacity = insert.getCapacity();
             Integer tare = insert.getTare();
             Integer tanker = insert.getTanker();
-            if (vhcode.isEmpty()) {
-                return ResponseHandler.generateResponse("VHcode harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (vhbrand.isEmpty()) {
-                return ResponseHandler.generateResponse("VHbrand harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (vhmodel.isEmpty()) {
-                return ResponseHandler.generateResponse("VHmodel harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (vhcolor.isEmpty()) {
-                return ResponseHandler.generateResponse("VHcolor harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (dateofcommission.isEmpty()) {
-                return ResponseHandler.generateResponse("DateOfCommission harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (regno.isEmpty()) {
-                return ResponseHandler.generateResponse("RegNo harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (stnk.isEmpty()) {
-                return ResponseHandler.generateResponse("STNK harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (user.isEmpty()) {
-                return ResponseHandler.generateResponse("User harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (t8.isEmpty()) {
-                return ResponseHandler.generateResponse("T8 harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (manufactureyear.isEmpty()) {
-                return ResponseHandler.generateResponse("ManufactureYear harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (stnkexpired.isEmpty()){
-                return ResponseHandler.generateResponse("STNKExpired harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (chasisno.isEmpty()) {
-                return ResponseHandler.generateResponse("ChasisNo harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (engineno.isEmpty()) {
-                return ResponseHandler.generateResponse("EngineNo harus di isi", HttpStatus.OK, null, 0, "01");
-            } else if (capacity == 0 ) {
-                return ResponseHandler.generateResponse("Capacity tidak boleh di isi 0", HttpStatus.OK, null, 0, "01");
+            if(categorycode.isEmpty() || categorycode == null) {
+               return ResponseHandler.generateResponse("categorycode harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID"); 
+            } else if(categoryname.isEmpty() || categorycode == null) {
+               return ResponseHandler.generateResponse("categoryname harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID"); 
+            } else if(businessunitcode.isEmpty() || businessunitcode == null) {
+               return ResponseHandler.generateResponse("businessunitcode harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID"); 
+            } else if(businessunitname.isEmpty() || businessunitname == null) {
+               return ResponseHandler.generateResponse("businessunitname harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID"); 
+            } else if (vhcode.isEmpty() || vhcode == null) {
+                return ResponseHandler.generateResponse("VHcode harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID");
+            } else if (user.isEmpty() || user == null) {
+                return ResponseHandler.generateResponse("User harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID");
+            } else if (t8.isEmpty() || t8 == null) {
+                return ResponseHandler.generateResponse("T8 harus di isi", HttpStatus.OK, null, 0, "INPUT_INVALID");
+            } else if (capacity == 0) {
+                return ResponseHandler.generateResponse("Capacity tidak boleh di isi 0", HttpStatus.OK, null, 0, "INPUT_INVALID");
             } else {
-                List<Vms> resultData = vmsService.cekData(chasisno, engineno, vhcode, regno); 
+                List<Vms> resultData = vmsService.cekData(vhcode); 
                 System.out.println(resultData);;
-                int jumlah = vmsService.cekDataJumlah(chasisno, engineno, vhcode, regno);
+                int jumlah = vmsService.cekDataJumlah(vhcode);
                 System.out.println(jumlah);
                 if (jumlah != 0) {
-                    return ResponseHandler.generateResponse("Kendaraan Telah di Daftarkan Sebelumnya", HttpStatus.OK, resultData, jumlah, "02");
+                    return ResponseHandler.generateResponse("Kendaraan Telah di Daftarkan Sebelumnya", HttpStatus.OK, resultData, jumlah, "VIHICLE_REGISTERED");
                 } else {
-                    String categorycode = insert.getCategorycode();
+                    
+                    System.out.println(categorycode);
                     String categoryid = vmsService.cekCategory(categorycode);
                     System.out.println(categoryid);
                     if (categoryid == null) {
-                        return ResponseHandler.generateResponse("CategoryCode Tidak ditemukan", HttpStatus.OK, categoryid, 0, "03");
+                        return ResponseHandler.generateResponse("CategoryCode Tidak ditemukan", HttpStatus.OK, categoryid, 0, "CAT_NOTFOUND");
                     } else {
-                        String businessunitcode = insert.getBusinessunitcode();
+                        
                         String estateid = vmsService.cekEstate(businessunitcode);
                         System.out.println(estateid);
                         if (estateid == null){
-                            return ResponseHandler.generateResponse("BusinessUnitCode Tidak ditemukan", HttpStatus.OK, estateid, 0, "04");
+                            return ResponseHandler.generateResponse("BusinessUnitCode Tidak ditemukan", HttpStatus.OK, estateid, 0, "BU_NOTFOUND");
                         } else {
-                            List<Vms> result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, vhcolor, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, capacity, tare, stnkexpired, tanker);
-                            return ResponseHandler.generateResponse("Data Berhasil di tambahkan", HttpStatus.OK, result, 1, "00");
+                            String result = vmsService.insertData(categoryid, estateid, vhcode, vhbrand, vhmodel, vhcolor, dateofcommission, chasisno, engineno, regno, stnk, user, t8, manufactureyear, capacity, tare, stnkexpired, tanker);
+                            return ResponseHandler.generateResponse("Data Berhasil di tambahkan", HttpStatus.OK, result, 1, "SUCCESS");
                         } 
                     }
                 } 
             }
         } catch (Exception e) {
-            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null, 0, "99");
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.MULTI_STATUS, null, 0, "ERROR");
         }
     }
 
-    
+    @Async
     @GetMapping("vms/search")
-    public ResponseEntity<Object> Search(@RequestParam(value = "categoryid", defaultValue = "") String categoryid, @RequestParam(value = "estateid", defaultValue = "") String estateid,@RequestParam(value = "vhcode", defaultValue = "") String vhcode,@RequestParam(value = "vhbrand", defaultValue = "") String vhbrand,@RequestParam(value = "chasisno", defaultValue = "") String chasisno,@RequestParam(value = "engineno", defaultValue = "") String engineno,@RequestParam(value = "stnk", defaultValue = "") String stnk,@RequestParam(value = "manufactureyear", defaultValue = "") String manufactureyear,@RequestParam(value = "capacity", defaultValue = "") String capacity,@RequestParam(value = "stnkexpired", defaultValue = "") String stnkexpired){
+    public ResponseEntity<Object> Search(@RequestParam(value = "categorycode", defaultValue = "") String categorycode, @RequestParam(value = "businessunitcode", defaultValue = "") String businessunitcode,  @RequestParam(value = "vhcode", defaultValue = "") String vhcode,@RequestParam(value = "vhbrand", defaultValue = "") String vhbrand,@RequestParam(value = "chasisno", defaultValue = "") String chasisno,@RequestParam(value = "engineno", defaultValue = "") String engineno,@RequestParam(value = "stnk", defaultValue = "") String stnk,@RequestParam(value = "manufactureyear", defaultValue = "") String manufactureyear,@RequestParam(value = "capacity", defaultValue = "") String capacity,@RequestParam(value = "stnkexpired", defaultValue = "") String stnkexpired){
         try{
-            if (categoryid.isEmpty() && estateid.isEmpty() && vhcode.isEmpty() && vhbrand.isEmpty() && chasisno.isEmpty() && engineno.isEmpty() && stnk.isEmpty() && manufactureyear.isEmpty() && capacity.isEmpty() && stnkexpired.isEmpty() ) {
+            if (categorycode.isEmpty() && businessunitcode.isEmpty() && vhcode.isEmpty() && vhbrand.isEmpty() && chasisno.isEmpty() && engineno.isEmpty() && stnk.isEmpty() && manufactureyear.isEmpty() && capacity.isEmpty() && stnkexpired.isEmpty() ) {
             Iterable<Vms> result = vmsService.findAll();
-            int jumlah = vmsService.JumlahSearch(categoryid, estateid, vhcode, vhbrand, chasisno, engineno, stnk, manufactureyear, capacity, stnkexpired);
-            return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah, "00");
+            int jumlah = vmsService.jumlahFindAll();
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah, "SUCCESS");
         } else {
+            String categoryid = vmsService.cekCategory(categorycode);
+            System.out.println(categoryid);
+            if (categoryid == null) {
+                categoryid = "";
+            } 
+            String estateid = vmsService.cekEstate(businessunitcode);
+            if (estateid == null) {
+                estateid = "";
+            } 
+            System.out.println(estateid);
+            // String contractorid = vmsService.cekEstate(contractorcode);  
             List<Vms> result = vmsService.Search(categoryid, estateid, vhcode, vhbrand, chasisno, engineno, stnk, manufactureyear, capacity, stnkexpired);
             int jumlah = vmsService.JumlahSearch(categoryid, estateid, vhcode, vhbrand, chasisno, engineno, stnk, manufactureyear, capacity, stnkexpired);
             System.out.println(jumlah);
-            return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah, "00"); 
+            return ResponseHandler.generateResponse("Success", HttpStatus.OK, result, jumlah, "SUCCESS"); 
         }
     } catch (Exception e) {
-        return ResponseHandler.generateResponse(e.getMessage(),HttpStatus.MULTI_STATUS,null,0, "99");
+        return ResponseHandler.generateResponse(e.getMessage(),HttpStatus.MULTI_STATUS,null,0, "ERROR");
     }
 }
     

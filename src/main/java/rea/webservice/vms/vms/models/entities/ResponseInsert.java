@@ -4,25 +4,45 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "vehiclemaster", catalog ="Vehicle")
 public class ResponseInsert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String categoryid;
-    private String estateid;
-    private String vhcode;
-    private String vhbrand;
-    private String vhmodel;
-    private String dateofcommission;
-    private String chasisno;
-    private String engineno;
-    private String regno;
-    private String stnk;
-    private String user;
-    private String t8;
-    private String manufactureyear;
-    private String stnkexpired;
+    private int id;
+    private String categoryid; // categoryCode
+    private String estateid; // tidak ada
+    private String contractorid; // tidak ada
+    private String vhcode; // vehicleCode
+    private String vhbrand; // brand
+    private String vhmodel; // model
+    private String vhcolor; // tidak ada
+    private String active; // tidak ada
+    private String dateofcommission; // sesuai
+    private String chasisno; // ChasisNumber
+    private String engineno; // EngineNumber
+    private String regno; // registrationNumber
+    private String stnk; // stnkNumber
+    private String remarks; // tidak ada
+    private String createdby; // sesuai
+    private String createdon; //createdDate
+    private String modifiedby; // tidak ada
+    private String modifiedon; // tidak ada
+    private String t8; // sesuai
+    private String inactivedate; // tidak ada
+    private String manufactureyear; // sesuai
+    private int capacity; // tidak ada
+    private int tare; // tidak ada
+    private String stnkexpired; //stnkExpiredDate
+    private int tanker; // tidak ada
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getCategoryid() {
         return categoryid;
     }
@@ -34,6 +54,12 @@ public class ResponseInsert {
     }
     public void setEstateid(String estateid) {
         this.estateid = estateid;
+    }
+    public String getContractorid() {
+        return contractorid;
+    }
+    public void setContractorid(String contractorid) {
+        this.contractorid = contractorid;
     }
     public String getVhcode() {
         return vhcode;
@@ -52,6 +78,18 @@ public class ResponseInsert {
     }
     public void setVhmodel(String vhmodel) {
         this.vhmodel = vhmodel;
+    }
+    public String getVhcolor() {
+        return vhcolor;
+    }
+    public void setVhcolor(String vhcolor) {
+        this.vhcolor = vhcolor;
+    }
+    public String getActive() {
+        return active;
+    }
+    public void setActive(String active) {
+        this.active = active;
     }
     public String getDateofcommission() {
         return dateofcommission;
@@ -83,11 +121,35 @@ public class ResponseInsert {
     public void setStnk(String stnk) {
         this.stnk = stnk;
     }
-    public String getUser() {
-        return user;
+    public String getRemarks() {
+        return remarks;
     }
-    public void setUser(String user) {
-        this.user = user;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+    public String getCreatedby() {
+        return createdby;
+    }
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+    public String getCreatedon() {
+        return createdon;
+    }
+    public void setCreatedon(String createdon) {
+        this.createdon = createdon;
+    }
+    public String getModifiedby() {
+        return modifiedby;
+    }
+    public void setModifiedby(String modifiedby) {
+        this.modifiedby = modifiedby;
+    }
+    public String getModifiedon() {
+        return modifiedon;
+    }
+    public void setModifiedon(String modifiedon) {
+        this.modifiedon = modifiedon;
     }
     public String getT8() {
         return t8;
@@ -95,11 +157,29 @@ public class ResponseInsert {
     public void setT8(String t8) {
         this.t8 = t8;
     }
+    public String getInactivedate() {
+        return inactivedate;
+    }
+    public void setInactivedate(String inactivedate) {
+        this.inactivedate = inactivedate;
+    }
     public String getManufactureyear() {
         return manufactureyear;
     }
     public void setManufactureyear(String manufactureyear) {
         this.manufactureyear = manufactureyear;
+    }
+    public int getCapacity() {
+        return capacity;
+    }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+    public int getTare() {
+        return tare;
+    }
+    public void setTare(int tare) {
+        this.tare = tare;
     }
     public String getStnkexpired() {
         return stnkexpired;
@@ -107,13 +187,22 @@ public class ResponseInsert {
     public void setStnkexpired(String stnkexpired) {
         this.stnkexpired = stnkexpired;
     }
+    public int getTanker() {
+        return tanker;
+    }
+    public void setTanker(int tanker) {
+        this.tanker = tanker;
+    }
     @Override
     public String toString() {
-        return "ResponseInsert [categoryid=" + categoryid + ", estateid=" + estateid + ", vhcode=" + vhcode
-                + ", vhbrand=" + vhbrand + ", vhmodel=" + vhmodel + ", dateofcommission=" + dateofcommission
-                + ", chasisno=" + chasisno + ", engineno=" + engineno + ", regno=" + regno + ", stnk=" + stnk
-                + ", user=" + user + ", t8=" + t8 + ", manufactureyear=" + manufactureyear + ", stnkexpired="
-                + stnkexpired + "]";
+        return "ResponseInsert [id=" + id + ", categoryid=" + categoryid + ", estateid=" + estateid + ", contractorid="
+                + contractorid + ", vhcode=" + vhcode + ", vhbrand=" + vhbrand + ", vhmodel=" + vhmodel + ", vhcolor="
+                + vhcolor + ", active=" + active + ", dateofcommission=" + dateofcommission + ", chasisno=" + chasisno
+                + ", engineno=" + engineno + ", regno=" + regno + ", stnk=" + stnk + ", remarks=" + remarks
+                + ", createdby=" + createdby + ", createdon=" + createdon + ", modifiedby=" + modifiedby
+                + ", modifiedon=" + modifiedon + ", t8=" + t8 + ", inactivedate=" + inactivedate + ", manufactureyear="
+                + manufactureyear + ", capacity=" + capacity + ", tare=" + tare + ", stnkexpired=" + stnkexpired
+                + ", tanker=" + tanker + "]";
     }
     
 }
